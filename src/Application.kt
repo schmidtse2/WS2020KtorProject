@@ -7,17 +7,22 @@ import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
-fun main(args: Array<String>): Unit = EngineMain.main(args)
+fun main(args: Array<String>) {
+    embeddedServer(
+        Netty,
+        watchPaths = listOf("solutions/exercise4"),
+        port = 8080,
+        module = Application::module
+    ).apply { start(wait = true) }
+}
 
 //@Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
-    val server = embeddedServer(Netty, port = 8080) {
+//@kotlin.jvm.JvmOverloads
+fun Application.module() {
         routing {
-            get ("/") {
-                call.respondText("Hello World!")
+            get ("/hello") {
+                call.respondText("Heljoo!")
             }
         }
-    }
 }
 
