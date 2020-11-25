@@ -10,8 +10,7 @@ import io.ktor.sessions.*
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
-data class Student(val name: String, val matriculationNumber: Number)
-data class Students(val value: List<Student>)
+data class Students(val value: List<Number>)
 
 //@Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
@@ -26,15 +25,12 @@ fun Application.module(testing: Boolean = false) {
 
             call.sessions.set(
                 Students(listOf(
-                    Student("Alexander Kaiser", 123456),
-                    Student("Andre Müller", 456789),
-                    Student("Tilman Haß", 987654),
-                    Student("Torge Jensen", 100000),
-
+                    123456,
+                    456789,
+                    987654,
+                    100000,
                 ))
             )
-
-//            call.sessions.set(Students(listOf("sdaf", "sdaf", "sdaf")))
 
             headers.entries().forEach {
                 html += "${it.key}: ${it.value}\n"
@@ -42,8 +38,8 @@ fun Application.module(testing: Boolean = false) {
             call.respondText(html)
         }
         get ("/cookies") {
-            val get = call.sessions.get<Students>()
-            call.respondText(get?.value?.get(0)?.name.orEmpty())
+            val session = call.sessions.get<Students>()
+            call.respondText(session?.value.toString())
         }
     }
 }
