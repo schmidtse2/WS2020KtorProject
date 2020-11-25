@@ -10,7 +10,7 @@ plugins {
     kotlin("jvm") version "1.4.10"
 }
 
-group = "de.hs-flensburg"
+group = "de.hsflensburg"
 version = "0.0.1-SNAPSHOT"
 
 application {
